@@ -65,17 +65,30 @@ A look's `gear`, `hood` and `house` show how other players see the player, but d
 
 ## The character creator
 
-On the client, `Creator.open()` opens the game's character creator over the game, and the player sees their changes on their own character as they make them. When they confirm, their new look reaches the server as `playerAppearanceChanged`, and the client raises `creatorConfirmed` with the name they chose; `creatorCancelled` fires if they back out instead. `Creator.isOpen()` and `Creator.close()` do what they say.
+The client has no creator screen of its own: a resource builds one on the `Creator` API, as Foundations does, and the player sees each change on their own character as they make it.
+
+- `Creator.begin()` starts an editing session and returns `false` if another resource already holds one, so check it before showing your screen. `Creator.isActive()` says whether any resource holds one.
+- `Creator.getSchema()` lists every category and the ids it accepts, and `Creator.applyPatch({ hairStyle: id })` changes categories. `creatorChanged` fires with the new selections once a change applies.
+- `Creator.commit()` keeps the changes, and the new look reaches the server as `playerAppearanceChanged`. `Creator.cancel()` puts the old look back.
+- `CreatorPreview.setCamera(frame)` points a camera at the front of the player and `CreatorPreview.rotate(degrees)` turns them, until `CreatorPreview.restoreCamera()`.
+- `Creator.exportLook()` returns the player's look on the client.
 
 ```js
 // client/main.js
-Events.on("creator:open", () => Creator.open());
-Events.on("creatorConfirmed", () => Events.emitServer("creator:done"));
+Events.on("creator:open", () => {
+  if (!Creator.begin()) return; // another resource is editing the look
+  // ... show your creator screen
+});
+
+Events.on("creator:confirm", () => {
+  Creator.commit();
+  Events.emitServer("creator:done");
+});
+
+Events.on("creator:cancel", () => Creator.cancel());
 ```
 
-A disguised player's game stops sending their look, so take off a [disguise](#disguises) before opening the creator.
-
-A resource can build a creator of its own. `Creator.begin()` starts an editing session, `Creator.getSchema()` lists every category and the ids it accepts, `Creator.applyPatch({ hairStyle: id })` changes categories, and `Creator.commit()` keeps the changes or `Creator.cancel()` puts the old look back. `CreatorPreview.setCamera(frame)` points a camera at the front of the player and `CreatorPreview.rotate(degrees)` turns them, until `CreatorPreview.restoreCamera()`. `Creator.exportLook()` returns the player's look on the client.
+A disguised player's game stops sending their look, so take off a [disguise](#disguises) before starting a session.
 
 Facial hair is two categories, `facialHair` and `facialHairColor`, which take the look's own values. The schema lists the game's beards and moustaches and a few natural shades, `applyPatch` also takes any `"#rrggbb"` colour, and an empty id takes the facial hair off or gives it back its own colour. Offer them only when `Creator.getCapabilities().facialHair` is `true`, as older builds do not have them.
 
