@@ -1,11 +1,11 @@
 ---
 title: Overview
-description: What a HogwartsMP resource is, where its code runs, and which guide to open first.
+description: What an ArcaneMP resource is, where its code runs, and which guide to open first.
 sidebar:
   order: 1
 ---
 
-HogwartsMP resources run JavaScript in one of two environments:
+ArcaneMP resources run JavaScript in one of two environments:
 
 - **Server resources** run in Node.js and own authoritative game state.
 - **Client resources** run in a sandboxed V8 context and control local presentation and input.
@@ -121,7 +121,7 @@ Use the navigation to browse the globals available to the selected environment. 
 
 ```js
 Events.on("playerConnect", (player) => {
-  player.sendChat(`Welcome to Hogwarts, ${player.nickname}!`);
+  player.sendChat(`Welcome to the castle, ${player.nickname}!`);
 
   const npc = NPC.create("Goblin_Grunt", { x: 250, y: 120, z: 0 });
   if (npc) {

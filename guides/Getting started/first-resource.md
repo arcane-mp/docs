@@ -5,7 +5,7 @@ sidebar:
   order: 110
 ---
 
-Everything a game mode does in HogwartsMP lives in a **resource**: a directory containing a `package.json` manifest and one or more JavaScript files. The server discovers every resource directory under `resources/` at startup, runs its server scripts in Node.js, and packages its client scripts and assets for each connecting player, where they run in a sandboxed V8 context.
+Everything a game mode does in ArcaneMP lives in a **resource**: a directory containing a `package.json` manifest and one or more JavaScript files. The server discovers every resource directory under `resources/` at startup, runs its server scripts in Node.js, and packages its client scripts and assets for each connecting player, where they run in a sandboxed V8 context.
 
 This guide builds a minimal two-file resource and explains every field along the way.
 
@@ -30,7 +30,7 @@ The split matters: the two sides see **different globals** and never share memor
   "name": "my-gamemode",
   "version": "1.0.0",
   "author": "You",
-  "description": "My first HogwartsMP game mode",
+  "description": "My first ArcaneMP game mode",
   "mafiahub": {
     "clientScripts": ["client/main.js"],
     "serverScripts": ["server/main.js"]
@@ -38,7 +38,7 @@ The split matters: the two sides see **different globals** and never share memor
 }
 ```
 
-`name` is required and must be unique across loaded resources; a duplicate is rejected with a warning. `version`, `description`, and `author` follow npm conventions. Everything HogwartsMP-specific sits under the `mafiahub` key:
+`name` is required and must be unique across loaded resources; a duplicate is rejected with a warning. `version`, `description`, and `author` follow npm conventions. Everything ArcaneMP-specific sits under the `mafiahub` key:
 
 | Key | Meaning |
 | --- | --- |
@@ -96,7 +96,7 @@ Events.on("resourceStart", (resourceName) => {
 
 Events.on("playerConnect", (player) => {
   console.log(`${player.nickname} connected (ping ${player.ping}ms)`);
-  player.sendChat(`Welcome to Hogwarts, ${player.nickname}!`);
+  player.sendChat(`Welcome to the castle, ${player.nickname}!`);
 });
 ```
 
@@ -109,7 +109,7 @@ Events.on("playerConnect", (player) => {
 Events.on("resourceStart", (resourceName) => {
   if (resourceName !== "my-gamemode") return;
 
-  Game.notify("Welcome to Hogwarts!");
+  Game.notify("Welcome to the castle!");
 });
 
 // Sent by the server with Events.emitAllClients or player.emit.
@@ -172,7 +172,7 @@ Events.on("resourceStop", (resourceName) => {
 
 ## Persisting state
 
-HogwartsMP has no built-in database, and anything a resource only holds in memory is gone when the server stops. Server scripts run in Node.js, so a resource saves to whatever store it brings. On public servers that is usually [`hmp-mysql`](https://github.com/hogwarts-mp/foundations/tree/main/resources/hmp-mysql) from HMP Foundations, which shares one pooled MySQL or MariaDB connection with every resource that declares it as a dependency and reads it through `Imports.get("hmp-mysql")`.
+ArcaneMP has no built-in database, and anything a resource only holds in memory is gone when the server stops. Server scripts run in Node.js, so a resource saves to whatever store it brings. On public servers that is usually [`hmp-mysql`](https://github.com/hogwarts-mp/foundations/tree/main/resources/hmp-mysql) from HMP Foundations, which shares one pooled MySQL or MariaDB connection with every resource that declares it as a dependency and reads it through `Imports.get("hmp-mysql")`.
 
 That includes player inventories: a joining player starts with an empty inventory, and it is dropped when they leave. [Saving inventories](/guides/players/inventory/#saving-inventories) shows how to keep it between visits.
 

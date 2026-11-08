@@ -1,6 +1,6 @@
-# HogwartsMP documentation
+# ArcaneMP documentation
 
-Public, maintainer-authored guides for the HogwartsMP scripting API.
+Public, maintainer-authored guides for the ArcaneMP scripting API.
 
 The closed-source Mod remains authoritative for generated client and server API contracts. It publishes those contracts as immutable artifacts to MafiaHub Services. This repository downloads a public contract revision, composes it with the authored guides, generates the complete site, and deploys it to the standalone documentation service.
 

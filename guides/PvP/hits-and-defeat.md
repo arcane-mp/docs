@@ -112,7 +112,7 @@ Events.on("playerConnect", (player) => {
 
 ## Spell cooldowns
 
-Out of combat, the game recharges most spells in about a third of a second. Fighting enemies, it waits each spell's full cooldown. To the game, a fight between players is never combat, so HogwartsMP decides when a player is in a PvP fight:
+Out of combat, the game recharges most spells in about a third of a second. Fighting enemies, it waits each spell's full cooldown. To the game, a fight between players is never combat, so ArcaneMP decides when a player is in a PvP fight:
 
 - a player hostile to them is within 50 m, or
 - they hit, or were hit by, a hostile player in the last `flagCombatLockSeconds`.

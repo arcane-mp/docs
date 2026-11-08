@@ -134,7 +134,7 @@ Events.on("seasonChanged", (payload) => {
 
 ## Runtime-generated events
 
-Runtime-generated events use the normal `Events.on` and `Events.once` subscriptions. They are raised by the framework or the native HogwartsMP module rather than by `Events.emit`. Avoid emitting custom events with these names.
+Runtime-generated events use the normal `Events.on` and `Events.once` subscriptions. They are raised by the framework or the native ArcaneMP module rather than by `Events.emit`. Avoid emitting custom events with these names.
 
 The declarations type the handlers of the events in these tables, so an editor knows each argument. Events of your own, and the few native ones the declarations leave out, such as `chatSend` and the voice events, hand a TypeScript handler `unknown` arguments.
 

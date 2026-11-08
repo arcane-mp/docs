@@ -6,7 +6,7 @@ sidebar:
   order: 900
 ---
 
-A HogwartsMP server is one executable plus a `server.json` configuration file and a `resources/` directory. The release ships the runtime only, with no game mode. Public servers run **HMP Foundations**, a complete resource pack that adds characters, inventory, banking, jobs, shops, administration and other common systems on top of a MySQL or MariaDB database.
+An ArcaneMP server is one executable plus a `server.json` configuration file and a `resources/` directory. The release ships the runtime only, with no game mode. Public servers run **HMP Foundations**, a complete resource pack that adds characters, inventory, banking, jobs, shops, administration and other common systems on top of a MySQL or MariaDB database.
 
 This guide takes a fresh machine to a server players can join, then covers keeping it running and updating it. It is for server owners. Players only need the [player guide](https://github.com/hogwarts-mp/hosting/blob/main/PLAYER_GUIDE.md) and their own PC copy of Hogwarts Legacy, from Steam or the Epic Games Store. A PC Game Pass copy also works, but its support is experimental.
 
@@ -15,9 +15,9 @@ This guide takes a fresh machine to a server players can join, then covers keepi
 | | Why |
 | --- | --- |
 | A Windows x64 or Linux x86-64 host | The dedicated server is native on both. Linux needs **glibc 2.38 or newer**: Ubuntu 24.04+ or Debian 13+. |
-| The release ZIP from the official `#releases` channel in the [HogwartsMP Discord](https://discord.gg/RzqENjGe99) | It must be the **same release your players run**. A mismatched client is rejected before it loads in. |
+| The release ZIP from the official `#releases` channel in the [ArcaneMP Discord](https://discord.gg/RzqENjGe99) | It must be the **same release your players run**. A mismatched client is rejected before it loads in. |
 | MySQL 8.x or MariaDB 10.6+ | Foundations stores its data there. A bare server with no resources needs no database. |
-| An [HMP Foundations release](https://github.com/hogwarts-mp/foundations/releases) | The supported starting point for a public server. Its [compatibility matrix](https://github.com/hogwarts-mp/foundations/blob/main/COMPATIBILITY.md) names the HogwartsMP release it pairs with. |
+| An [HMP Foundations release](https://github.com/hogwarts-mp/foundations/releases) | The supported starting point for a public server. Its [compatibility matrix](https://github.com/hogwarts-mp/foundations/blob/main/COMPATIBILITY.md) names the ArcaneMP release it pairs with. |
 | Control of the host firewall, and of the router on a home connection | Players reach the server on port **27015 over both UDP and TCP**. |
 
 > Running in Docker or under Pterodactyl or Pelican? The server's [public image](/guides/hosting-a-server/docker/) packages this same runtime. Read on for configuration, Foundations and the masterlist, then follow that page for the container itself.
@@ -39,7 +39,7 @@ Do not send the archive or its `client/` directory to players, and do not mirror
 
 ### Windows
 
-1. Create a permanent directory such as `C:\HogwartsMPServer`.
+1. Create a permanent directory such as `C:\ArcaneMPServer`.
 2. Copy everything inside the release's `server` directory into it.
 3. Create empty `resources`, `logs` and `data` directories next to `HogwartsMPServer.exe`.
 
@@ -133,8 +133,8 @@ sudo ufw allow 27015/tcp
 On Windows, allow the program when Windows Defender Firewall asks on first start, or add the rule from an elevated PowerShell. The rule needs administrator rights; the server does not:
 
 ```powershell
-New-NetFirewallRule -DisplayName "HogwartsMP UDP" -Direction Inbound -Protocol UDP -LocalPort 27015 -Action Allow
-New-NetFirewallRule -DisplayName "HogwartsMP TCP" -Direction Inbound -Protocol TCP -LocalPort 27015 -Action Allow
+New-NetFirewallRule -DisplayName "ArcaneMP UDP" -Direction Inbound -Protocol UDP -LocalPort 27015 -Action Allow
+New-NetFirewallRule -DisplayName "ArcaneMP TCP" -Direction Inbound -Protocol TCP -LocalPort 27015 -Action Allow
 ```
 
 On a cloud host, open the same port over UDP and TCP in the provider's firewall or security group as well. Test from a machine **outside** your network: connecting from the host itself proves nothing about the public path, and TCP port checkers cannot test a UDP port.
@@ -148,7 +148,7 @@ Start MySQL or MariaDB first, then the server, with the server directory as the 
 On Windows:
 
 ```powershell
-Set-Location C:\HogwartsMPServer
+Set-Location C:\ArcaneMPServer
 .\HogwartsMPServer.exe
 ```
 
@@ -175,7 +175,7 @@ The console accepts `status` (address and player count), `help`, and `stop` or `
 
 ## 7. Join it
 
-Start HogwartsMP through the launcher, open **Play**, and enter the server's address, or pick it from the list once it is [listed](#8-list-it-publicly). The client assumes port 27015, so add `:port` only if you changed it. Fill **Password** only if the server [sets one](/guides/hosting-a-server/configuration/#passwords).
+Start ArcaneMP through the launcher, open **Play**, and enter the server's address, or pick it from the list once it is [listed](#8-list-it-publicly). The client assumes port 27015, so add `:port` only if you changed it. Fill **Password** only if the server [sets one](/guides/hosting-a-server/configuration/#passwords).
 
 You can also hand players a link. The launcher registers the `hogwartsmp://` scheme each time it runs, so once a player has started it once, opening a link connects straight to your server:
 
@@ -210,7 +210,7 @@ Skip this if a game panel manages the process; its daemon already supervises the
 
 ```ini
 [Unit]
-Description=HogwartsMP dedicated server
+Description=ArcaneMP dedicated server
 After=network-online.target mysql.service
 Wants=network-online.target
 Requires=mysql.service

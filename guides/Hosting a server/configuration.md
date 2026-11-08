@@ -40,7 +40,7 @@ Every key is optional: one you leave out takes its default. Restart the server a
 | --- | --- | --- |
 | `host` | `0.0.0.0` | Interface the server binds to. `0.0.0.0` accepts players on every interface. |
 | `port` | `27015` | Game port. Players connect here over **UDP** and download resources over **TCP**. The [information API](#information-api) is on it too. |
-| `map` | `""` | Reserved. HogwartsMP ignores it; leave it empty. |
+| `map` | `""` | Reserved. ArcaneMP ignores it; leave it empty. |
 | `maxplayers` | `32` | Connection cap. This build allows at most **128**; a higher value logs a warning and runs with 128. |
 | `server-token` | `""` | Masterlist key from the [MafiaHub dashboard](https://mafiahub.dev/dashboard/servers). Empty keeps the server unlisted. See [List it publicly](/guides/hosting-a-server/run-a-server/#8-list-it-publicly). |
 | `password` | `""` | Password players must enter to join. Empty lets anyone in. See [Passwords](#passwords). |
@@ -49,7 +49,7 @@ Every key is optional: one you leave out takes its default. Restart the server a
 
 ### Mod keys
 
-HogwartsMP's own settings live under the `mod` object, so they can never collide with framework keys added later.
+ArcaneMP's own settings live under the `mod` object, so they can never collide with framework keys added later.
 
 | Key | Default | Meaning |
 | --- | --- | --- |

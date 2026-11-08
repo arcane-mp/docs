@@ -5,7 +5,7 @@ sidebar:
   order: 200
 ---
 
-A HogwartsMP server and its players' clients split the work. The server owns the state that matters, and each client runs the game for its player and reports what happens in it. Knowing which side owns what tells you which input to trust.
+An ArcaneMP server and its players' clients split the work. The server owns the state that matters, and each client runs the game for its player and reports what happens in it. Knowing which side owns what tells you which input to trust.
 
 ## What the server owns
 

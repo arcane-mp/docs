@@ -9,10 +9,10 @@ To develop a resource you need a server you control and a client to join it with
 
 ## 1. Set up the server
 
-Download the release ZIP from the `#releases` channel in the [HogwartsMP Discord](https://discord.gg/RzqENjGe99) and extract it. Copy everything inside its `server/` directory to a directory of your own, and create an empty `resources/` directory beside `HogwartsMPServer.exe`:
+Download the release ZIP from the `#releases` channel in the [ArcaneMP Discord](https://discord.gg/RzqENjGe99) and extract it. Copy everything inside its `server/` directory to a directory of your own, and create an empty `resources/` directory beside `HogwartsMPServer.exe`:
 
 ```text
-C:\HogwartsMPDev\
+C:\ArcaneMPDev\
 ├── HogwartsMPServer.exe
 ├── ...
 └── resources\
@@ -21,7 +21,7 @@ C:\HogwartsMPDev\
 Start it from that directory. The server finds `server.json`, `resources/` and `logs/` relative to the directory it runs in:
 
 ```powershell
-cd C:\HogwartsMPDev
+cd C:\ArcaneMPDev
 .\HogwartsMPServer.exe
 ```
 
@@ -43,7 +43,7 @@ Create the resource from [Your first resource](/guides/getting-started/first-res
 
 ## 3. Join it
 
-Start HogwartsMP with the launcher from the same release, open **Play**, and connect to `127.0.0.1`. The client and server must come from the same release, or the client is turned away before it loads in.
+Start ArcaneMP with the launcher from the same release, open **Play**, and connect to `127.0.0.1`. The client and server must come from the same release, or the client is turned away before it loads in.
 
 ## 4. Reload after a change
 

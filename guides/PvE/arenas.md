@@ -5,7 +5,7 @@ sidebar:
   order: 440
 ---
 
-Overland has two combat arenas, the game's Combat Challenges: a walled ground where waves of enemies come at the player, five in a row. In single player a totem starts one. In HogwartsMP the server runs them: `Arenas.start` puts up the arena's walls for every player near it and spawns its waves as server [NPCs](/guides/npcs-and-creatures/npcs/), so everyone there fights the same enemies. The `Arenas` global starts and stops them on the server and reads them on the client.
+Overland has two combat arenas, the game's Combat Challenges: a walled ground where waves of enemies come at the player, five in a row. In single player a totem starts one. In ArcaneMP the server runs them: `Arenas.start` puts up the arena's walls for every player near it and spawns its waves as server [NPCs](/guides/npcs-and-creatures/npcs/), so everyone there fights the same enemies. The `Arenas` global starts and stops them on the server and reads them on the client.
 
 ## The arenas
 
@@ -23,7 +23,7 @@ There are two, and their ids are the game's own map location ids:
 | `id`, `x`, `y`, `z` | The arena and its centre |
 | `radius` | How far from the centre a player counts as in it, in centimetres: 2800 for both |
 | `waves` | How many waves it has: 5 for both |
-| `reward` | The item the game grants for finishing it. HogwartsMP does not grant it; see [What arenas pay](#what-arenas-pay) |
+| `reward` | The item the game grants for finishing it. ArcaneMP does not grant it; see [What arenas pay](#what-arenas-pay) |
 | `state` | `"idle"`, `"starting"`, `"wave"`, `"intermission"` or `"completed"` |
 | `wave` | The current wave, counting from 1, or 0 before the first |
 | `killed`, `total` | How many of the current wave's enemies are dead, and how many it has, reinforcements included |
@@ -152,7 +152,7 @@ Arena enemies pay out like any NPC, by [reward policy](/guides/pve/rewards-and-l
 - It is written into every live arena enemy and every one spawned after, like a camp's. Setting it replaces a policy you set on one enemy with `npc.setRewardPolicy`, and setting one on an enemy afterwards replaces the arena's for that enemy.
 - `Arenas.getRewardPolicy()` reads it back with the server default and built-in values filled in, so it never returns `null`.
 
-Finishing an arena pays nothing by itself. The game's prize for it is the Legendary named in the arena's `reward`, and HogwartsMP removes the wave spawner that would grant it. `arenaCompleted` names the players who were there at the end, so give them what you like. Here every enemy pays everyone in the arena, and finishing grants the Legendary to those who do not have it yet:
+Finishing an arena pays nothing by itself. The game's prize for it is the Legendary named in the arena's `reward`, and ArcaneMP removes the wave spawner that would grant it. `arenaCompleted` names the players who were there at the end, so give them what you like. Here every enemy pays everyone in the arena, and finishing grants the Legendary to those who do not have it yet:
 
 ```js
 // server/main.js

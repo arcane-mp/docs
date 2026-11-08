@@ -5,7 +5,7 @@ sidebar:
   order: 535
 ---
 
-The Hogwarts Express runs on one track through Overland, past Hogsmeade station. On a HogwartsMP server the game's own timetable is off on every player's game, so the train only comes when a script runs it. `World.hogwartsExpress` runs it from the server, and every player sees it at the same spot on the track, players who arrive mid-run included.
+The Hogwarts Express runs on one track through Overland, past Hogsmeade station. On an ArcaneMP server the game's own timetable is off on every player's game, so the train only comes when a script runs it. `World.hogwartsExpress` runs it from the server, and every player sees it at the same spot on the track, players who arrive mid-run included.
 
 ## Positions on the track
 

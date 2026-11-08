@@ -19,7 +19,7 @@ A voice is at full volume close by and fades to silence at the edge of its range
 
 ## How far voices carry
 
-Each player talks on a tier: whisper, normal or shout. HogwartsMP starts them at 8 m, 25 m and 60 m:
+Each player talks on a tier: whisper, normal or shout. ArcaneMP starts them at 8 m, 25 m and 60 m:
 
 | Tier | Number | Range |
 | --- | --- | --- |
@@ -36,7 +36,7 @@ Each player talks on a tier: whisper, normal or shout. HogwartsMP starts them at
 
 `getRange()`, `getTierRange(tier)`, `getPlayerRange(player)` and `getPlayerTier(player)` read them back.
 
-`Voice.setRange` with 0 or less does not restore HogwartsMP's 25 m: it sets 25 cm, which silences everyone. Pass `2500` to go back.
+`Voice.setRange` with 0 or less does not restore ArcaneMP's 25 m: it sets 25 cm, which silences everyone. Pass `2500` to go back.
 
 ```js
 // server/main.js
@@ -52,7 +52,7 @@ function takeStage(player) {
 
 ### Whispering and shouting
 
-HogwartsMP gives players no key for changing tier, so a resource that wants them to whisper or shout binds one on the client. `Voice.setTier(tier)` asks the server to move the player, and the server raises `playerVoiceTierChange` with the player and their new tier:
+ArcaneMP gives players no key for changing tier, so a resource that wants them to whisper or shout binds one on the client. `Voice.setTier(tier)` asks the server to move the player, and the server raises `playerVoiceTierChange` with the player and their new tier:
 
 ```js
 // client/main.js
