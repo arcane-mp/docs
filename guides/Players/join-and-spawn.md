@@ -40,10 +40,10 @@ Events.on("playerConnecting", async (connection) => {
 
 ### Join links and tickets
 
-A `hogwartsmp://` link starts the game and joins the server it names (see [Join it](/guides/hosting-a-server/run-a-server/#7-join-it)). Besides `password` and `nickname`, a link can carry a `ticket`, such as one your website issues on its Join button:
+A `arcanemp://` link starts the game and joins the server it names (see [Join it](/guides/hosting-a-server/run-a-server/#7-join-it)). Besides `password` and `nickname`, a link can carry a `ticket`, such as one your website issues on its Join button:
 
 ```text
-hogwartsmp://play.example.com?ticket=k7Hq2xR9vT4mWb8c
+arcanemp://play.example.com?ticket=k7Hq2xR9vT4mWb8c
 ```
 
 The client passes the ticket on untouched, and `playerConnecting` reads it as `connection.ticket` before the player takes a slot. Without one, `connection.ticket` is an empty string.

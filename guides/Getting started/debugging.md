@@ -12,7 +12,7 @@ The release server and client have no debugger to attach to resource scripts, so
 | | Server | Client |
 | --- | --- | --- |
 | While it runs | The server console | Nowhere: release clients have no in-game console |
-| On disk | `logs/hogwarts-mp.log` in the server's directory | `logs/HogwartsMP.log` in the client's directory, beside `HogwartsMPLauncher.exe` |
+| On disk | `logs/hogwarts-mp.log` in the server's directory | `logs/ArcaneMP.log` in the client's directory, beside `ArcaneMPLauncher.exe` |
 
 Every line a resource writes is prefixed with the resource's name:
 
@@ -25,7 +25,7 @@ Both files rotate at 10 MB and keep the ten files before it, as `hogwarts-mp.1.l
 To follow the client log while you play, keep it open in an editor that reloads changed files, or tail it from PowerShell:
 
 ```powershell
-Get-Content .\logs\HogwartsMP.log -Wait -Tail 50
+Get-Content .\logs\ArcaneMP.log -Wait -Tail 50
 ```
 
 ## What `console` prints
@@ -108,7 +108,7 @@ A client script that stops while it holds the player's controls, for example aft
 ## What to attach to a bug report
 
 - From the server: `logs/hogwarts-mp.log`, and `logs/framework.log` if the server failed while starting up.
-- From the client: `logs/HogwartsMP.log` and `logs/cef.log` from the client's directory.
+- From the client: `logs/ArcaneMP.log` and `logs/cef.log` from the client's directory.
 
 Remove tokens, passwords, database URLs and players' addresses before sharing a log.
 

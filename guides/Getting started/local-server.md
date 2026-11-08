@@ -9,11 +9,11 @@ To develop a resource you need a server you control and a client to join it with
 
 ## 1. Set up the server
 
-Download the release ZIP from the `#releases` channel in the [ArcaneMP Discord](https://discord.gg/RzqENjGe99) and extract it. Copy everything inside its `server/` directory to a directory of your own, and create an empty `resources/` directory beside `HogwartsMPServer.exe`:
+Download the release ZIP from the `#releases` channel in the [ArcaneMP Discord](https://discord.gg/RzqENjGe99) and extract it. Copy everything inside its `server/` directory to a directory of your own, and create an empty `resources/` directory beside `ArcaneMPServer.exe`:
 
 ```text
 C:\ArcaneMPDev\
-├── HogwartsMPServer.exe
+├── ArcaneMPServer.exe
 ├── ...
 └── resources\
 ```
@@ -22,7 +22,7 @@ Start it from that directory. The server finds `server.json`, `resources/` and `
 
 ```powershell
 cd C:\ArcaneMPDev
-.\HogwartsMPServer.exe
+.\ArcaneMPServer.exe
 ```
 
 The first start writes a default `server.json`, and its defaults suit local work. The console shows the log as the server runs, and the same lines go to `logs/hogwarts-mp.log`. A few lines written before the server has read its configuration, such as the note that it wrote `server.json`, go to `logs/framework.log` instead.

@@ -98,7 +98,7 @@ There is one train for the whole server. Every resource can move it and receives
 
 ## With Foundations
 
-HMP Foundations' [`hmp-express`](https://github.com/hogwarts-mp/foundations/tree/main/resources/hmp-express) puts a timetable back. At each departure, in in-game time on the server's clock, it stands the train at the start of the track, runs it to each stop, waits there and sends it off the far end. Its `data/hmp-express.json` holds:
+Foundations' [`hmp-express`](https://github.com/arcane-mp/foundations/tree/main/resources/hmp-express) puts a timetable back. At each departure, in in-game time on the server's clock, it stands the train at the start of the track, runs it to each stop, waits there and sends it off the far end. Its `data/hmp-express.json` holds:
 
 | Key | Meaning |
 | --- | --- |

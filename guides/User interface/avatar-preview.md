@@ -178,7 +178,7 @@ function createWardrobePreview(view) {
 }
 ```
 
-- The backdrop comes up first, and the figure shows once the colour matches, after about a second at most. Until then, for a preview anchored to a view, the game asks the page to cover the hole in the colour: it dispatches an `hmp:hole:cover` event on the page's `window`, whose `detail.cover` is the CSS to paint, a colour or a gradient, and then `null` once the figure shows.
+- The backdrop comes up first, and the figure shows once the colour matches, after about a second at most. Until then, for a preview anchored to a view, the game asks the page to cover the hole in the colour: it dispatches an `amp:hole:cover` event on the page's `window`, whose `detail.cover` is the CSS to paint, a colour or a gradient, and then `null` once the figure shows.
 - The colour is exact at the band where the backdrop meets the page, and close elsewhere: outdoors in daylight, the game's glow can lighten one side and darken the other by a few steps.
 - A cut, a flash or a teleport changes the exposure at once, and the backdrop is off for a few frames before it catches up.
 - A gradient matches at both ends, and blends between them in linear light rather than as CSS would.
@@ -190,7 +190,7 @@ The page paints the cover over its hole:
 ```js
 // ui/gear.js, running in the page
 // While a matched backdrop settles, the hole shows the colour it is settling on.
-window.addEventListener("hmp:hole:cover", (event) => {
+window.addEventListener("amp:hole:cover", (event) => {
   hole.style.background = event.detail.cover ?? "";
 });
 ```

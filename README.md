@@ -29,7 +29,7 @@ The preview is completely public and does not require the closed-source Mod, Hog
 Install Node.js 22 or newer, clone this repository, and install the pinned dependencies:
 
 ```sh
-git clone https://github.com/hogwarts-mp/docs.git
+git clone https://github.com/arcane-mp/docs.git
 cd docs
 corepack enable
 corepack prepare pnpm@10.4.1 --activate
