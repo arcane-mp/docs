@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dist = path.join(root, "dist");
 // The header links in docs.config.json name the public site absolutely, so they are checked as links into this build.
-const siteHosts = new Set(["docs.hogwarts-mp.com"]);
+const siteHosts = new Set(["docs.arcane.mp", "docs.hogwarts-mp.com"]);
 const local = "http://local.invalid";
 
 const pages = new Map();
