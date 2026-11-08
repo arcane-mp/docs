@@ -131,7 +131,7 @@ The resource that owns a view receives events about it, each with the view's id 
 
 ## From the server
 
-`player.showUI`, `player.hideUI` and `player.sendUI` ask a client resource named `ui` to open, close and message a view, and do nothing without one. Neither the release nor HMP Foundations includes that resource, so send your own events with `player.emit`, as above, and keep views in your client scripts.
+`player.showUI`, `player.hideUI` and `player.sendUI` ask a client resource named `ui` to open, close and message a view, and do nothing without one. Neither the release nor Foundations includes that resource, so send your own events with `player.emit`, as above, and keep views in your client scripts.
 
 ## Where to go next
 

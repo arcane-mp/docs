@@ -8,11 +8,11 @@
   "links": [
     { "label": "Guides", "url": "https://docs.arcane.mp/guides/overview/" },
     { "label": "Get started", "url": "https://docs.arcane.mp/guides/getting-started/first-resource/" },
-    { "label": "ArcaneMP on GitHub", "url": "https://github.com/hogwarts-mp/mod" },
+    { "label": "ArcaneMP on GitHub", "url": "https://github.com/arcane-mp/mod" },
     { "label": "MafiaHub Framework", "url": "https://github.com/MafiaHub/Framework" }
   ],
   "communityContent": {
-    "repository": "https://github.com/hogwarts-mp/docs",
+    "repository": "https://github.com/arcane-mp/docs",
     "authority": "maintainer",
     "navigation": "unified",
     "documents": ["guides/**/*.md"]

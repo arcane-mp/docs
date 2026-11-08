@@ -123,7 +123,7 @@ Each field the server holds overrides the policy for that gate. A lock still bea
 
 ## With Foundations
 
-HMP Foundations' [`hmp-doors`](https://github.com/hogwarts-mp/foundations/tree/main/resources/hmp-doors) handles gates beside [doors](/guides/world/doors/#with-foundations). In its `data/hmp-doors.json`, a rule with `gates` in place of `doors` takes gate names or `"*"`, and ranks and matches groups like a door rule:
+Foundations' [`hmp-doors`](https://github.com/arcane-mp/foundations/tree/main/resources/hmp-doors) handles gates beside [doors](/guides/world/doors/#with-foundations). In its `data/hmp-doors.json`, a rule with `gates` in place of `doors` takes gate names or `"*"`, and ranks and matches groups like a door rule:
 
 ```json
 {

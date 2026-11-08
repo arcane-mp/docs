@@ -162,7 +162,7 @@ Client scripts can change doors too, but only for their own player, and the serv
 
 ## With Foundations
 
-HMP Foundations' [`hmp-doors`](https://github.com/hogwarts-mp/foundations/tree/main/resources/hmp-doors) decides which doors, gates and locks each player may pass, from ranked rules in its `data/hmp-doors.json`. A rule allows, denies or locks doors by name or path, can apply only to players in certain `hmp-core` groups, and can hold a padlock's `lockLevel` for everyone. Lower priorities are stronger. `shareUnlocks` turns shared unlocks on, and is `false` by default.
+Foundations' [`hmp-doors`](https://github.com/arcane-mp/foundations/tree/main/resources/hmp-doors) decides which doors, gates and locks each player may pass, from ranked rules in its `data/hmp-doors.json`. A rule allows, denies or locks doors by name or path, can apply only to players in certain `hmp-core` groups, and can hold a padlock's `lockLevel` for everyone. Lower priorities are stronger. `shareUnlocks` turns shared unlocks on, and is `false` by default.
 
 ```json
 {
