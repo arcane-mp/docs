@@ -253,9 +253,6 @@ These events are delivered only inside the client runtime. Receiving a native cl
 | `chatSend` | `(text)` | The local player submits text through the chat overlay |
 | `spellCast` | `(spellPath)` | The local player casts a spell; the path identifies its spell record, or is the id of a [server-defined spell](/guides/players/custom-spells/#casting) |
 | `playerRegionChanged` | `(region)` | The local player enters a named region |
-| `creatorOpened` | `({})` | The character creator opens |
-| `creatorConfirmed` | `({ first, last })` | The character creator closes after confirmation |
-| `creatorCancelled` | `({})` | The character creator closes without confirmation |
 | `creatorChanged` | `(state)` | A creator session's selections change |
 | `abilityStatus` | `(handle)` | An ability the local player plays starts or settles |
 | `spellAssignment` | `({ source, loadout, slot })` | A spell is assigned to a slot, from the game's menu or a script |

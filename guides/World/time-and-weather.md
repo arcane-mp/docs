@@ -121,7 +121,7 @@ Events.on("housePointsChange", (house, points, previous) => {
 
 ## On the client
 
-A client script can show its own player a different sky from everyone else's, such as clear daylight while the character creator is open. `World.setLocalOverride(override)` lays its fields over the server's, on this client only:
+A client script can show its own player a different sky from everyone else's, such as clear daylight while its [character creator](/guides/players/appearance/#the-character-creator) is open. `World.setLocalOverride(override)` lays its fields over the server's, on this client only:
 
 | Field | Shows |
 | --- | --- |
@@ -131,12 +131,16 @@ A client script can show its own player a different sky from everyone else's, su
 
 ```js
 // client/main.js
-Events.on("creatorOpened", () => {
+Events.on("creator:open", () => {
+  if (!Creator.begin()) return;
   World.setLocalOverride({ weather: "Clear", hour: 12, season: 1 });
 });
 
-Events.on("creatorConfirmed", () => World.clearLocalOverride());
-Events.on("creatorCancelled", () => World.clearLocalOverride());
+Events.on("creator:close", (keep) => {
+  if (keep) Creator.commit();
+  else Creator.cancel();
+  World.clearLocalOverride();
+});
 ```
 
 Fields you leave out follow the server, and the date always does. Setting or clearing the override shows at once, without the game's usual blend from one weather to the next. A field of the wrong type or out of range throws a `TypeError`, and an empty object clears the override.
