@@ -84,7 +84,7 @@ Events.on("playerConnecting", async (connection) => {
 });
 ```
 
-The join waits while a handler's promise is pending, so the check can call out to your own service. A `hogwartsmp://` link carries the ticket as `?ticket=`; [Join links and tickets](/guides/players/join-and-spawn/#join-links-and-tickets) covers encoding it and the joins that present it twice.
+The join waits while a handler's promise is pending, so the check can call out to your own service. A `arcanemp://` link carries the ticket as `?ticket=`; [Join links and tickets](/guides/players/join-and-spawn/#join-links-and-tickets) covers encoding it and the joins that present it twice.
 
 ## Client scripts belong to the player
 

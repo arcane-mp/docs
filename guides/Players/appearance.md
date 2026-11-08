@@ -13,7 +13,7 @@ A player's look is their body, face, hair, voice and name. Their own game builds
 
 | Field | Meaning |
 | --- | --- |
-| `format`, `version` | Always `"hogwartsmp-look"`, and the version of the format |
+| `format`, `version` | Always `"arcanemp-look"`, and the version of the format |
 | `gender` | `"male"` or `"female"` |
 | `presets` | The creator's choice for each category, such as `{ hairStyle: "HairFemale040" }`. `hairColour` is either a preset or a picked `"#rrggbb"` colour |
 | `gear` | What the player wears, as the game's appearance ids |

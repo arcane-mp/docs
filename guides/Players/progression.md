@@ -9,7 +9,7 @@ A player's level, spells and talents live in their own game. A client script app
 
 The game runs on the player's machine, so a modified client can raise its own level or grant itself talents. Base anything the server decides, such as rewards or access, on the server's own records, not on what a client reports. See [Authority](/guides/core-concepts/authority/).
 
-HMP Foundations ships [`hmp-progression`](https://github.com/hogwarts-mp/foundations/tree/main/resources/hmp-progression), which keeps each character's experience, talent points and talents in MySQL and applies them when the player joins. Use it, or build your own on the calls below.
+Foundations ships [`hmp-progression`](https://github.com/arcane-mp/foundations/tree/main/resources/hmp-progression), which keeps each character's experience, talent points and talents in MySQL and applies them when the player joins. Use it, or build your own on the calls below.
 
 ## Levels and experience
 

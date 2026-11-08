@@ -1,14 +1,14 @@
 ---
 title: Hosting a server
-description: Take a fresh Windows or Linux machine to a public server running HMP Foundations, then keep it running and updated.
+description: Take a fresh Windows or Linux machine to a public server running Foundations, then keep it running and updated.
 sidebar:
   label: Run a server
   order: 900
 ---
 
-An ArcaneMP server is one executable plus a `server.json` configuration file and a `resources/` directory. The release ships the runtime only, with no game mode. Public servers run **HMP Foundations**, a complete resource pack that adds characters, inventory, banking, jobs, shops, administration and other common systems on top of a MySQL or MariaDB database.
+An ArcaneMP server is one executable plus a `server.json` configuration file and a `resources/` directory. The release ships the runtime only, with no game mode. Public servers run **Foundations**, a complete resource pack that adds characters, inventory, banking, jobs, shops, administration and other common systems on top of a MySQL or MariaDB database.
 
-This guide takes a fresh machine to a server players can join, then covers keeping it running and updating it. It is for server owners. Players only need the [player guide](https://github.com/hogwarts-mp/hosting/blob/main/PLAYER_GUIDE.md) and their own PC copy of Hogwarts Legacy, from Steam or the Epic Games Store. A PC Game Pass copy also works, but its support is experimental.
+This guide takes a fresh machine to a server players can join, then covers keeping it running and updating it. It is for server owners. Players only need the [player guide](https://github.com/arcane-mp/hosting/blob/main/PLAYER_GUIDE.md) and their own PC copy of Hogwarts Legacy, from Steam or the Epic Games Store. A PC Game Pass copy also works, but its support is experimental.
 
 ## What you need
 
@@ -17,7 +17,7 @@ This guide takes a fresh machine to a server players can join, then covers keepi
 | A Windows x64 or Linux x86-64 host | The dedicated server is native on both. Linux needs **glibc 2.38 or newer**: Ubuntu 24.04+ or Debian 13+. |
 | The release ZIP from the official `#releases` channel in the [ArcaneMP Discord](https://discord.gg/RzqENjGe99) | It must be the **same release your players run**. A mismatched client is rejected before it loads in. |
 | MySQL 8.x or MariaDB 10.6+ | Foundations stores its data there. A bare server with no resources needs no database. |
-| An [HMP Foundations release](https://github.com/hogwarts-mp/foundations/releases) | The supported starting point for a public server. Its [compatibility matrix](https://github.com/hogwarts-mp/foundations/blob/main/COMPATIBILITY.md) names the ArcaneMP release it pairs with. |
+| An [Foundations release](https://github.com/arcane-mp/foundations/releases) | The supported starting point for a public server. Its [compatibility matrix](https://github.com/arcane-mp/foundations/blob/main/COMPATIBILITY.md) names the ArcaneMP release it pairs with. |
 | Control of the host firewall, and of the router on a home connection | Players reach the server on port **27015 over both UDP and TCP**. |
 
 > Running in Docker or under Pterodactyl or Pelican? The server's [public image](/guides/hosting-a-server/docker/) packages this same runtime. Read on for configuration, Foundations and the masterlist, then follow that page for the container itself.
@@ -27,7 +27,7 @@ This guide takes a fresh machine to a server players can join, then covers keepi
 Download the complete ZIP from `#releases` and extract it. It is arranged like this:
 
 ```text
-HogwartsMP-<version>-<commit>/
+ArcaneMP-<version>/
 ├── client/          # your own client copy
 ├── server/          # Windows dedicated server
 └── server-linux/    # Linux dedicated server
@@ -41,7 +41,7 @@ Do not send the archive or its `client/` directory to players, and do not mirror
 
 1. Create a permanent directory such as `C:\ArcaneMPServer`.
 2. Copy everything inside the release's `server` directory into it.
-3. Create empty `resources`, `logs` and `data` directories next to `HogwartsMPServer.exe`.
+3. Create empty `resources`, `logs` and `data` directories next to `ArcaneMPServer.exe`.
 
 An ordinary user account can run the server, provided it can write to that directory. Do not run it elevated; nothing in the server requires administrator rights.
 
@@ -57,20 +57,20 @@ sudo apt-get install -y ca-certificates libcurl4t64 libssh2-1 libssl3t64 libstdc
 Create an unprivileged system account to own and run the server. This is a local account on the host, not a cloud provider's IAM service account:
 
 ```sh
-sudo useradd --system --home-dir /opt/hogwartsmp --shell /usr/sbin/nologin hogwartsmp
+sudo useradd --system --home-dir /opt/arcanemp --shell /usr/sbin/nologin arcanemp
 ```
 
 Then install the runtime from the directory where you extracted the archive:
 
 ```sh
-sudo install -d -o hogwartsmp -g hogwartsmp /opt/hogwartsmp
-sudo cp -a HogwartsMP-*/server-linux/. /opt/hogwartsmp/
-sudo install -d /opt/hogwartsmp/resources /opt/hogwartsmp/logs /opt/hogwartsmp/data
-sudo chown -R hogwartsmp:hogwartsmp /opt/hogwartsmp
-sudo chmod +x /opt/hogwartsmp/HogwartsMPServer /opt/hogwartsmp/crashpad_handler
+sudo install -d -o arcanemp -g arcanemp /opt/arcanemp
+sudo cp -a ArcaneMP-*/server-linux/. /opt/arcanemp/
+sudo install -d /opt/arcanemp/resources /opt/arcanemp/logs /opt/arcanemp/data
+sudo chown -R arcanemp:arcanemp /opt/arcanemp
+sudo chmod +x /opt/arcanemp/ArcaneMPServer /opt/arcanemp/crashpad_handler
 ```
 
-The `chmod` matters: an extracted archive does not always keep the executable bit. Keep `HogwartsMPServer`, `crashpad_handler` and `libnode.so.141` together. The last one is the bundled Node.js runtime that executes server resources, and a `libnode` from another release will not work.
+The `chmod` matters: an extracted archive does not always keep the executable bit. Keep `ArcaneMPServer`, `crashpad_handler` and `libnode.so.141` together. The last one is the bundled Node.js runtime that executes server resources, and a `libnode` from another release will not work.
 
 Never run the server as root.
 
@@ -96,11 +96,11 @@ That is enough for a first start. The server also writes a complete default file
 
 Every key, the join password, the command-line overrides and the required-mod list are covered in [Server configuration](/guides/hosting-a-server/configuration/).
 
-## 4. Install HMP Foundations
+## 4. Install Foundations
 
-Foundations is installed separately from the server and versioned as one unit: install every `hmp-*` resource from a single release, and never mix resource versions. Its own [installation guide](https://github.com/hogwarts-mp/foundations/blob/main/INSTALL.md) is authoritative. In short:
+Foundations is installed separately from the server and versioned as one unit: install every `hmp-*` resource from a single release, and never mix resource versions. Its own [installation guide](https://github.com/arcane-mp/foundations/blob/main/INSTALL.md) is authoritative. In short:
 
-1. Create an empty `hogwartsmp` database and a non-root account scoped to it, following the [database guide](https://github.com/hogwarts-mp/foundations/blob/main/DATABASE.md). Do not import a schema; Foundations creates and migrates its own tables.
+1. Create an empty `hogwartsmp` database and a non-root account scoped to it, following the [database guide](https://github.com/arcane-mp/foundations/blob/main/DATABASE.md). Do not import a schema; Foundations creates and migrates its own tables.
 2. Copy every `hmp-*` directory from the release's `resources` directory into your server's `resources/`. They must sit directly under it, with no extra `hmp-foundations/` level in between.
 3. Copy the release's example `data/hmp-*.json` files into your server's `data/` and replace every `CHANGE_ME` value. `data/hmp-mysql.json` holds the database connection.
 4. Remove any older resources the installation guide lists as overlapping. Two stacks loaded side by side give duplicate commands and UI.
@@ -149,14 +149,14 @@ On Windows:
 
 ```powershell
 Set-Location C:\ArcaneMPServer
-.\HogwartsMPServer.exe
+.\ArcaneMPServer.exe
 ```
 
 On Linux:
 
 ```sh
-cd /opt/hogwartsmp
-sudo -u hogwartsmp ./HogwartsMPServer
+cd /opt/arcanemp
+sudo -u arcanemp ./ArcaneMPServer
 ```
 
 The server finds `server.json`, `resources`, `data` and `logs` relative to the directory it runs in, so always start it from its own directory. A shortcut, scheduled task or service that only points at the executable starts in the wrong directory and finds no configuration or resources. Set its **Start in** or working directory too.
@@ -177,16 +177,16 @@ The console accepts `status` (address and player count), `help`, and `stop` or `
 
 Start ArcaneMP through the launcher, open **Play**, and enter the server's address, or pick it from the list once it is [listed](#8-list-it-publicly). The client assumes port 27015, so add `:port` only if you changed it. Fill **Password** only if the server [sets one](/guides/hosting-a-server/configuration/#passwords).
 
-You can also hand players a link. The launcher registers the `hogwartsmp://` scheme each time it runs, so once a player has started it once, opening a link connects straight to your server:
+You can also hand players a link. The launcher registers the `arcanemp://` scheme each time it runs, so once a player has started it once, opening a link connects straight to your server:
 
 ```text
-hogwartsmp://play.example.com
-hogwartsmp://203.0.113.10:28015
+arcanemp://play.example.com
+arcanemp://203.0.113.10:28015
 ```
 
 Link a player to a passworded server with `?password=…` appended. Anyone holding that link can join, so do not post it publicly.
 
-Run your first join with a disposable test account and walk through Foundations' [first-player checks](https://github.com/hogwarts-mp/foundations/blob/main/INSTALL.md#5-first-player-checks): create and select a character, reconnect, open the inventory, and confirm `/admin` is denied to a normal player.
+Run your first join with a disposable test account and walk through Foundations' [first-player checks](https://github.com/arcane-mp/foundations/blob/main/INSTALL.md#5-first-player-checks): create and select a character, reconnect, open the inventory, and confirm `/admin` is denied to a normal player.
 
 ## 8. List it publicly
 
@@ -206,7 +206,7 @@ A server started from a terminal stops when the terminal closes, does not come b
 
 ### Linux: systemd
 
-Skip this if a game panel manages the process; its daemon already supervises the server. Otherwise create `/etc/systemd/system/hogwartsmp.service`:
+Skip this if a game panel manages the process; its daemon already supervises the server. Otherwise create `/etc/systemd/system/arcanemp.service`:
 
 ```ini
 [Unit]
@@ -217,11 +217,11 @@ Requires=mysql.service
 
 [Service]
 Type=simple
-User=hogwartsmp
-Group=hogwartsmp
-WorkingDirectory=/opt/hogwartsmp
-EnvironmentFile=/etc/hogwartsmp.env
-ExecStart=/opt/hogwartsmp/HogwartsMPServer
+User=arcanemp
+Group=arcanemp
+WorkingDirectory=/opt/arcanemp
+EnvironmentFile=/etc/arcanemp.env
+ExecStart=/opt/arcanemp/ArcaneMPServer
 Restart=on-failure
 RestartSec=5
 StandardInput=null
@@ -243,18 +243,18 @@ Five lines carry the weight:
 Create the private environment file, fill it with `KEY=value` lines, and enable the unit:
 
 ```sh
-sudo install -m 600 /dev/null /etc/hogwartsmp.env
-sudoedit /etc/hogwartsmp.env
+sudo install -m 600 /dev/null /etc/arcanemp.env
+sudoedit /etc/arcanemp.env
 sudo systemctl daemon-reload
-sudo systemctl enable --now hogwartsmp
+sudo systemctl enable --now arcanemp
 ```
 
 Day to day:
 
 ```sh
-systemctl status hogwartsmp          # running? since when? last exit?
-sudo systemctl restart hogwartsmp    # after editing server.json or resources
-journalctl -u hogwartsmp -f          # live log; add -b for this boot only
+systemctl status arcanemp          # running? since when? last exit?
+sudo systemctl restart arcanemp    # after editing server.json or resources
+journalctl -u arcanemp -f          # live log; add -b for this boot only
 ```
 
 `StandardInput=null` disables the server console; `systemctl stop` and `systemctl status` replace it. Reboot the host once and confirm the server comes back by itself before opening it to players. That is the only real test that the unit is enabled and ordered after the database.
@@ -269,8 +269,8 @@ The launcher updates players' clients automatically. It never updates a dedicate
 
 1. Announce maintenance and stop admitting players.
 2. Stop the server cleanly.
-3. Back up `server.json`, `data/`, any custom resources, the runtime you are about to replace, and the Foundations database. Foundations documents the dump command under [backups and upgrades](https://github.com/hogwarts-mp/foundations/blob/main/DATABASE.md#backups-and-upgrades).
-4. Replace the runtime from the new release, and replace the whole Foundations pack as one unit with the release its compatibility matrix names. On Linux the runtime is `HogwartsMPServer`, `crashpad_handler` and `libnode.so.141`; run `chmod +x` on the first two again afterwards.
+3. Back up `server.json`, `data/`, any custom resources, the runtime you are about to replace, and the Foundations database. Foundations documents the dump command under [backups and upgrades](https://github.com/arcane-mp/foundations/blob/main/DATABASE.md#backups-and-upgrades).
+4. Replace the runtime from the new release, and replace the whole Foundations pack as one unit with the release its compatibility matrix names. On Linux the runtime is `ArcaneMPServer`, `crashpad_handler` and `libnode.so.141`; run `chmod +x` on the first two again afterwards.
 5. Read the release notes and example configs for new keys.
 6. Start the database, then the server, and wait for every resource's ready message.
 7. Join once with a client from the same release and test character selection, inventory and your main gameplay loop.
@@ -284,7 +284,7 @@ Keep the previous runtime and the matching database backup until the new build h
 | Exits immediately | Read the first error in the log. Confirm the working directory, a writable `logs/`, complete runtime files, and valid JSON. |
 | `JSON config could not be applied: … type must be …` | A `server.json` key has the wrong JSON type, such as `"port": "27015"` or `null`. The message names the type, not the key. See [Server configuration](/guides/hosting-a-server/configuration/#validation). |
 | Linux: `version 'GLIBC_2.38' not found` | The distribution is too old. Use Ubuntu 24.04+ or Debian 13+, directly or as a container base. |
-| Linux: `libnode.so.141: cannot open shared object file` | Keep the complete Linux bundle together, or start it with `LD_LIBRARY_PATH=/opt/hogwartsmp`. Do not substitute a `libnode` from another release. |
+| Linux: `libnode.so.141: cannot open shared object file` | Keep the complete Linux bundle together, or start it with `LD_LIBRARY_PATH=/opt/arcanemp`. Do not substitute a `libnode` from another release. |
 | Linux: exits on a VPS with `Tracy Profiler initialization failure: CPU doesn't support invariant TSC` | The virtual CPU hides a feature the built-in profiler checks for. Start the server with `TRACY_NO_INVARIANT_CHECK=1` in its environment (`Environment=TRACY_NO_INVARIANT_CHECK=1` in the unit). |
 | Stops when the terminal closes, or is gone after a reboot | It was started from a shell. Run it under [systemd](#linux-systemd) or a Windows service manager. |
 | Every Foundations resource fails after a reboot, but a manual start works | The server raced the database. Add `Requires=` and `After=mysql.service` to the unit. |
