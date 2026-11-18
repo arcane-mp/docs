@@ -39,11 +39,31 @@ Everything a client sends is a claim about its own game, and a modified client c
 | `playerFastTravelUnlocked` | The client's account of a Floo flame it lit. Save it, but check it before rewarding it. |
 | `housePointsRequest`, `beastCared`, `beastCaptureStart`, `beastCaptureRequest` | Requests. They take effect unless a handler refuses them by returning `false`. |
 | `doorUnlockRequest` | A request. The door stays locked unless a script releases it. |
-| `steamId`, `epicId`, `discordId`, `discordName`, `hardwareId` | Announced by the client. Never authorize anyone with them. |
+| `player.unverified` (`steamId`, `epicId`, `discordId`, `discordName`, `hardwareId`) | Announced by the client. Never authorize anyone with them. |
 
 `pvpHit` is different: it reports a hit the server has already arbitrated, so its amounts are the server's.
 
-`player.discordName` and `connection.discordName` are the username of the Discord account the player's client is signed in to, or an empty string without one. A name longer than 32 bytes arrives empty. Show it, but never key anything on it. On the client, `Discord.getUsername()` reads the same name, or an empty string until Discord has signed the player in.
+## Recognising a player
+
+`player.accountId` is the one identifier a player proves. Their client keeps an account key on their computer and signs every connection with it, and the server checks the signature before `playerConnecting` runs. It is 32 hex characters, the same on every server, and no other client can present it. Key saved data, ownership, bans, whitelists and permissions on it:
+
+```js
+// server/main.js
+const admins = new Set(["72cd6e8422c407fb6d098690f1130b7d"]);
+const bans = new Set(); // account ids, from your own storage
+
+Events.on("playerConnecting", (connection) => {
+  if (bans.has(connection.accountId)) connection.reject("You are banned from this server.");
+});
+
+const isAdmin = (player) => admins.has(player.accountId);
+```
+
+Everything else the client says about itself is under `player.unverified` (and `connection.unverified`). A Discord id is public, and a modified client reports any id it likes, so a server that grants staff by Discord id hands staff to anyone who looks one up. Reading the old names, such as `player.discordId` or `connection.steamId`, throws, so a script written against them fails where it trusted one. To link an account to Discord, have the player prove the Discord account some other way, such as an OAuth login on your website that records their `accountId`.
+
+`player.unverified.discordName` is the username of the Discord account the player's client is signed in to, or an empty string without one. A name longer than 32 bytes arrives empty. Show it, but never key anything on it. On the client, `Discord.getUsername()` reads the same name, or an empty string until Discord has signed the player in.
+
+The account is a key file on the player's computer. A player who deletes it, or plays from another computer without copying it, arrives with a new `accountId`.
 
 ## Handling what a client sends
 

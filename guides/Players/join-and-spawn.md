@@ -49,7 +49,7 @@ arcanemp://play.example.com?ticket=k7Hq2xR9vT4mWb8c
 The client passes the ticket on untouched, and `playerConnecting` reads it as `connection.ticket` before the player takes a slot. Without one, `connection.ticket` is an empty string.
 
 - Percent-encode the ticket with `encodeURIComponent`. A bare `+` arrives as a space. A `%` without two hex digits, `..`, a double quote, a backslash or a path after the port makes the game ignore the whole link, which must be at most 2048 characters long.
-- One join can present the same ticket twice: when the game restarts to install the server's [required mods](/guides/hosting-a-server/configuration/#required-curseforge-mods), and when the player presses **Try again** on the join dialog. Accept a repeat for a short while, for example from the same `connection.hardwareId`, rather than refusing every second use.
+- One join can present the same ticket twice: when the game restarts to install the server's [required mods](/guides/hosting-a-server/configuration/#required-curseforge-mods), and when the player presses **Try again** on the join dialog. Accept a repeat for a short while, for example from the same `connection.accountId`, rather than refusing every second use.
 - A ticket only reaches the server its link names. Joining another server from the list sends an empty ticket.
 - It is not encrypted on the wire, like the password, so keep tickets short-lived.
 
@@ -65,16 +65,16 @@ A spawn point decides where a player's game stands them when it loads them into 
 // server/main.js
 World.setSpawn({ position: { x: 366784, y: -461527, z: -82610 }, yaw: -130 });
 
-const lastPositions = new Map(); // hardware id -> where the player stood when they last left
+const lastPositions = new Map(); // account id -> where the player stood when they last left
 
 Events.on("playerConnecting", async (connection) => {
-  const saved = await loadLastPosition(connection.hardwareId);
-  if (saved) lastPositions.set(connection.hardwareId, saved);
+  const saved = await loadLastPosition(connection.accountId);
+  if (saved) lastPositions.set(connection.accountId, saved);
 });
 
 Events.on("playerConnect", (player) => {
-  const saved = lastPositions.get(player.hardwareId);
-  lastPositions.delete(player.hardwareId);
+  const saved = lastPositions.get(player.accountId);
+  lastPositions.delete(player.accountId);
   if (saved) player.setSpawn({ position: { x: saved.x, y: saved.y, z: saved.z }, yaw: saved.yaw });
 });
 ```
