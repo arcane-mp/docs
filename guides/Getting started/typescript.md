@@ -152,10 +152,10 @@ A server entry with a typed handler:
 
 ```ts
 // src/server/main.ts
-const banned = new Set<string>(["76561190000000000"]);
+const banned = new Set<string>(["72cd6e8422c407fb6d098690f1130b7d"]);
 
 Events.on("playerConnecting", (connection) => {
-  if (banned.has(connection.steamId)) connection.reject("You are banned from this server.");
+  if (banned.has(connection.accountId)) connection.reject("You are banned from this server.");
 });
 ```
 
