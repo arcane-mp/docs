@@ -1,6 +1,6 @@
 ---
 title: Loot
-description: Place chests, moonstone deposits and foragables the server owns, decide what each player finds in them, refill them, switch off the game's own loot, or run the game's own deposits and foragables from the server.
+description: Place chests, moonstone deposits and foragables the server owns, decide what each player finds in them, refill them, refuse the game's own loot, or run the game's own deposits and foragables from the server.
 sidebar:
   order: 530
 ---
@@ -67,21 +67,29 @@ function showDailyReward(player, alreadyClaimed) {
 
 `Lootables.getView(id, player)` returns a player's view, or `null` when they see the lootable's own contents.
 
-## Switching off the game's own loot
+## Refusing the game's own loot
 
-The game places its own chests, coin pouches, moonstone deposits and foragables everywhere, and each player's game spawns and empties them separately. To make your lootables the only loot, switch the game's families off with `World.suppressLoot`:
+The game places its own chests, coin pouches, Knut stacks, moonstone deposits and foragables everywhere, and each player's game spawns and empties them separately. Each player's client decides which of them that player may take: it raises `worldLootRequest(loot)` for each one, and a handler returning `false` refuses it. To make your lootables the only loot, refuse everything:
 
 ```js
-// server/main.js
-Events.on("resourceStart", (resourceName) => {
-  if (resourceName !== "my-gamemode") return;
-  World.suppressLoot({ chests: true, pouches: true, moonstones: true, foragables: true });
+// client/main.js
+Events.on("worldLootRequest", () => false);
+```
+
+A refused chest, pouch or pickup stays where it is, but offers no prompt or outline, and pressing F at it does nothing. A refused moonstone deposit breaks without paying out. Your own lootables are never asked about, and neither are Room of Requirement storage and quest containers.
+
+`loot` says what is being asked about. `kind` is `"chest"`, `"pouch"`, `"coins"` (loose Knut stacks), `"foragable"`, `"moonstone"` or `"item"` (keys, notes, potions and other pickups); `item` and `count` are what a pickup grants, and `actor`, `class` and `position` say which one it is. A client asks about each one once, as it loads, and keeps the answer until `WorldLoot.refresh()` asks again, so call it when what your handler decides on changes:
+
+```js
+// client/main.js
+// The server sets World.state "noCoins" to take the game's coins away, and to give them back.
+Events.on("worldLootRequest", (loot) => !(loot.kind === "coins" && World.state?.get("noCoins")));
+Events.on("entityStateChange", (entity, key) => {
+  if (entity.id === World.stateId && key === "noCoins") WorldLoot.refresh();
 });
 ```
 
-Suppressed chests and coin pouches are hidden, prompt and all, and Overland's moonstone and foragable spawns are removed along with placed deposits and foragables. Room of Requirement storage and quest containers are never touched. Spawns are removed only from areas that load after the change, so call it when your resource starts. `false` switches a family back on, a family you leave out keeps its setting, and `World.lootSuppressed` reads the current settings.
-
-For moonstones and foragables, `true` and `false` are the `"suppressed"` and `"native"` [loot policies](#the-games-own-deposits-and-foragables), so either one also stops the server's loot spots of that family.
+Handlers run synchronously, so answer straight away: a returned Promise refuses nothing. Refusing moonstones and foragables only stops the player taking them; to take them out of the world, set their [loot policy](#the-games-own-deposits-and-foragables).
 
 ## The game's own deposits and foragables
 
@@ -90,7 +98,7 @@ Each player's game spawns its own moonstone deposits and foragables across Overl
 | Policy | Moonstone deposits or foragables |
 | --- | --- |
 | `"native"` (the default) | Each player's game spawns its own, as in the single-player game |
-| `"suppressed"` | Nobody spawns them, as with `World.suppressLoot` |
+| `"suppressed"` | Nobody spawns them: placed deposits and foragables are hidden too |
 | `"server"` | The server runs the game's own spots as lootables every player shares |
 
 ```js
@@ -101,7 +109,7 @@ Events.on("resourceStart", (resourceName) => {
 });
 ```
 
-A family you leave out keeps its policy, and `World.lootPolicy` reads both. Any other value returns `false` and changes neither family. As with `suppressLoot`, the game's own spawns are removed only from areas that load after the change, so set the policy when your resource starts. Under `"server"`, `World.lootSuppressed` reads `true` for that family, since its native spawns are off. Leaving `"server"` removes every spot of that family, and returning to it places them again, stocked.
+A family you leave out keeps its policy, and `World.lootPolicy` reads both. Any other value returns `false` and changes neither family. The game's own spawns are removed only from areas that load after the change, so set the policy when your resource starts. Leaving `"server"` removes every spot of that family, and returning to it places them again, stocked.
 
 ### Loot spots
 
