@@ -8,7 +8,7 @@ sidebar:
 
 An ArcaneMP server is one executable plus a `server.json` configuration file and a `resources/` directory. The release ships the runtime only, with no game mode. Public servers run **Foundations**, a complete resource pack that adds characters, inventory, banking, jobs, shops, administration and other common systems on top of a MySQL or MariaDB database.
 
-This guide takes a fresh machine to a server players can join, then covers keeping it running and updating it. It is for server owners. Players only need the [player guide](https://github.com/arcane-mp/hosting/blob/main/PLAYER_GUIDE.md) and their own PC copy of Hogwarts Legacy, from Steam or the Epic Games Store. A PC Game Pass copy also works, but its support is experimental.
+This guide takes a fresh machine to a server players can join, then covers keeping it running and updating it. It is for server owners. Players only need the [player guide](/guides/hosting-a-server/player-guide/) and their own PC copy of Hogwarts Legacy, from Steam or the Epic Games Store. A PC Game Pass copy also works, but its support is experimental.
 
 ## What you need
 
@@ -196,7 +196,7 @@ An unlisted server is still reachable by address. To appear in the server list, 
 2. Click **Add a server**. This registers the listing and gives you its **server key**.
 3. Put the key in `server.json` as `server-token`, and restart.
 
-No heartbeat script is needed: while running, the server announces its name, address, port and player count, and it appears within a minute or so. The key also pairs the listing with the exact build players need.
+No heartbeat script is needed: while running, the server announces its name, address, port and player count to `https://masterlist.mafiahub.dev`, and it appears within a minute or so. That address is built into the server, but the host must allow outbound HTTPS to it. The key also pairs the listing with the exact build players need.
 
 The key is a secret. Anyone with it can announce a server as yours, so keep it out of screenshots, support logs, source control and Discord.
 
@@ -304,4 +304,5 @@ When asking for help, include the release, the operating system, a sanitized `se
 
 - [Server configuration](/guides/hosting-a-server/configuration/): every `server.json` key, command-line overrides, passwords and required mods.
 - [Docker and game panels](/guides/hosting-a-server/docker/): the public server image, Compose, and the Pterodactyl and Pelican egg.
+- [Player guide](/guides/hosting-a-server/player-guide/): the page to send your players, from installing the client to reporting a bug.
 - [Your first resource](/guides/getting-started/first-resource/): writing your own resources on top of the server.

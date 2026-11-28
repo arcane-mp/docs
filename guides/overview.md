@@ -116,6 +116,7 @@ Use the navigation to browse the globals available to the selected environment. 
 - [Hosting a server](/guides/hosting-a-server/run-a-server/) — installing on Windows or Linux, Foundations, ports, the masterlist, and updates.
 - [Server configuration](/guides/hosting-a-server/configuration/) — every `server.json` key, command-line flags, passwords, and required mods.
 - [Docker and game panels](/guides/hosting-a-server/docker/) — the public server image, Compose, and the Pterodactyl and Pelican egg.
+- [Player guide](/guides/hosting-a-server/player-guide/) — the page to send your players: installing the client, joining, updates and bug reports.
 
 ## Server example
 
